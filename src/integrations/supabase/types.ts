@@ -14,16 +14,230 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      businesses: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contacts: {
+        Row: {
+          business_id: string
+          created_at: string
+          id: string
+          instagram_username: string | null
+          name: string
+          phone: string | null
+          source: Database["public"]["Enums"]["contact_source"]
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          id?: string
+          instagram_username?: string | null
+          name: string
+          phone?: string | null
+          source?: Database["public"]["Enums"]["contact_source"]
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          id?: string
+          instagram_username?: string | null
+          name?: string
+          phone?: string | null
+          source?: Database["public"]["Enums"]["contact_source"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contacts_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conversations: {
+        Row: {
+          assignee_id: string | null
+          business_id: string
+          channel: Database["public"]["Enums"]["channel"]
+          contact_id: string
+          created_at: string
+          handler: Database["public"]["Enums"]["conv_handler"]
+          id: string
+          last_message_at: string
+          stage: Database["public"]["Enums"]["conv_stage"]
+          status: Database["public"]["Enums"]["conv_status"]
+          updated_at: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          business_id: string
+          channel: Database["public"]["Enums"]["channel"]
+          contact_id: string
+          created_at?: string
+          handler?: Database["public"]["Enums"]["conv_handler"]
+          id?: string
+          last_message_at?: string
+          stage?: Database["public"]["Enums"]["conv_stage"]
+          status?: Database["public"]["Enums"]["conv_status"]
+          updated_at?: string
+        }
+        Update: {
+          assignee_id?: string | null
+          business_id?: string
+          channel?: Database["public"]["Enums"]["channel"]
+          contact_id?: string
+          created_at?: string
+          handler?: Database["public"]["Enums"]["conv_handler"]
+          id?: string
+          last_message_at?: string
+          stage?: Database["public"]["Enums"]["conv_stage"]
+          status?: Database["public"]["Enums"]["conv_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversations_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "conversations_contact_id_fkey"
+            columns: ["contact_id"]
+            isOneToOne: false
+            referencedRelation: "contacts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          author: Database["public"]["Enums"]["msg_author"]
+          body: string
+          business_id: string
+          conversation_id: string
+          created_at: string
+          direction: Database["public"]["Enums"]["msg_direction"]
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          author: Database["public"]["Enums"]["msg_author"]
+          body: string
+          business_id: string
+          conversation_id: string
+          created_at?: string
+          direction: Database["public"]["Enums"]["msg_direction"]
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          author?: Database["public"]["Enums"]["msg_author"]
+          body?: string
+          business_id?: string
+          conversation_id?: string
+          created_at?: string
+          direction?: Database["public"]["Enums"]["msg_direction"]
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          business_id: string
+          created_at: string
+          full_name: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          updated_at: string
+        }
+        Insert: {
+          business_id: string
+          created_at?: string
+          full_name?: string
+          id: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Update: {
+          business_id?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_business_id_fkey"
+            columns: ["business_id"]
+            isOneToOne: false
+            referencedRelation: "businesses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_business_id: { Args: never; Returns: string }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "atendente"
+      channel: "whatsapp" | "instagram"
+      contact_source: "whatsapp" | "instagram" | "manual"
+      conv_handler: "bot" | "humano"
+      conv_stage:
+        | "novo"
+        | "em_atendimento"
+        | "orcamento"
+        | "pedido"
+        | "pago"
+        | "perdido"
+      conv_status: "aberta" | "aguardando" | "encerrada"
+      msg_author: "customer" | "bot" | "human"
+      msg_direction: "in" | "out"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +364,22 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "atendente"],
+      channel: ["whatsapp", "instagram"],
+      contact_source: ["whatsapp", "instagram", "manual"],
+      conv_handler: ["bot", "humano"],
+      conv_stage: [
+        "novo",
+        "em_atendimento",
+        "orcamento",
+        "pedido",
+        "pago",
+        "perdido",
+      ],
+      conv_status: ["aberta", "aguardando", "encerrada"],
+      msg_author: ["customer", "bot", "human"],
+      msg_direction: ["in", "out"],
+    },
   },
 } as const
