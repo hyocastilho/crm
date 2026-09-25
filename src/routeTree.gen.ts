@@ -10,21 +10,42 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiContactsRouteImport } from './routes/api/contacts'
+import { Route as ApiConversationsRouteImport } from './routes/api/conversations'
 import { Route as ApiHealthRouteImport } from './routes/api/health'
+import { Route as ApiPipelineRouteImport } from './routes/api/pipeline'
 import { Route as ApiAuthLoginRouteImport } from './routes/api/auth/login'
 import { Route as ApiAuthLogoutRouteImport } from './routes/api/auth/logout'
 import { Route as ApiAuthMeRouteImport } from './routes/api/auth/me'
 import { Route as ApiAuthRefreshRouteImport } from './routes/api/auth/refresh'
+import { Route as ApiContactsIdRouteImport } from './routes/api/contacts.$id'
+import { Route as ApiConversationsIdRouteImport } from './routes/api/conversations.$id'
 import { Route as ApiWebhooksMetaRouteImport } from './routes/api/webhooks/meta'
+import { Route as ApiConversationsIdMessagesRouteImport } from './routes/api/conversations.$id.messages'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactsRoute = ApiContactsRouteImport.update({
+  id: '/api/contacts',
+  path: '/api/contacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiConversationsRoute = ApiConversationsRouteImport.update({
+  id: '/api/conversations',
+  path: '/api/conversations',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiHealthRoute = ApiHealthRouteImport.update({
   id: '/api/health',
   path: '/api/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPipelineRoute = ApiPipelineRouteImport.update({
+  id: '/api/pipeline',
+  path: '/api/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthLoginRoute = ApiAuthLoginRouteImport.update({
@@ -47,73 +68,128 @@ const ApiAuthRefreshRoute = ApiAuthRefreshRouteImport.update({
   path: '/api/auth/refresh',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactsIdRoute = ApiContactsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiContactsRoute,
+} as any)
+const ApiConversationsIdRoute = ApiConversationsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiConversationsRoute,
+} as any)
 const ApiWebhooksMetaRoute = ApiWebhooksMetaRouteImport.update({
   id: '/api/webhooks/meta',
   path: '/api/webhooks/meta',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiConversationsIdMessagesRoute =
+  ApiConversationsIdMessagesRouteImport.update({
+    id: '/messages',
+    path: '/messages',
+    getParentRoute: () => ApiConversationsIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/contacts': typeof ApiContactsRouteWithChildren
+  '/api/conversations': typeof ApiConversationsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/pipeline': typeof ApiPipelineRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/refresh': typeof ApiAuthRefreshRoute
+  '/api/contacts/$id': typeof ApiContactsIdRoute
+  '/api/conversations/$id': typeof ApiConversationsIdRouteWithChildren
   '/api/webhooks/meta': typeof ApiWebhooksMetaRoute
+  '/api/conversations/$id/messages': typeof ApiConversationsIdMessagesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/contacts': typeof ApiContactsRouteWithChildren
+  '/api/conversations': typeof ApiConversationsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/pipeline': typeof ApiPipelineRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/refresh': typeof ApiAuthRefreshRoute
+  '/api/contacts/$id': typeof ApiContactsIdRoute
+  '/api/conversations/$id': typeof ApiConversationsIdRouteWithChildren
   '/api/webhooks/meta': typeof ApiWebhooksMetaRoute
+  '/api/conversations/$id/messages': typeof ApiConversationsIdMessagesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/contacts': typeof ApiContactsRouteWithChildren
+  '/api/conversations': typeof ApiConversationsRouteWithChildren
   '/api/health': typeof ApiHealthRoute
+  '/api/pipeline': typeof ApiPipelineRoute
   '/api/auth/login': typeof ApiAuthLoginRoute
   '/api/auth/logout': typeof ApiAuthLogoutRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/refresh': typeof ApiAuthRefreshRoute
+  '/api/contacts/$id': typeof ApiContactsIdRoute
+  '/api/conversations/$id': typeof ApiConversationsIdRouteWithChildren
   '/api/webhooks/meta': typeof ApiWebhooksMetaRoute
+  '/api/conversations/$id/messages': typeof ApiConversationsIdMessagesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/api/contacts'
+    | '/api/conversations'
     | '/api/health'
+    | '/api/pipeline'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
     | '/api/auth/refresh'
+    | '/api/contacts/$id'
+    | '/api/conversations/$id'
     | '/api/webhooks/meta'
+    | '/api/conversations/$id/messages'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/api/contacts'
+    | '/api/conversations'
     | '/api/health'
+    | '/api/pipeline'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
     | '/api/auth/refresh'
+    | '/api/contacts/$id'
+    | '/api/conversations/$id'
     | '/api/webhooks/meta'
+    | '/api/conversations/$id/messages'
   id:
     | '__root__'
     | '/'
+    | '/api/contacts'
+    | '/api/conversations'
     | '/api/health'
+    | '/api/pipeline'
     | '/api/auth/login'
     | '/api/auth/logout'
     | '/api/auth/me'
     | '/api/auth/refresh'
+    | '/api/contacts/$id'
+    | '/api/conversations/$id'
     | '/api/webhooks/meta'
+    | '/api/conversations/$id/messages'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiContactsRoute: typeof ApiContactsRouteWithChildren
+  ApiConversationsRoute: typeof ApiConversationsRouteWithChildren
   ApiHealthRoute: typeof ApiHealthRoute
+  ApiPipelineRoute: typeof ApiPipelineRoute
   ApiAuthLoginRoute: typeof ApiAuthLoginRoute
   ApiAuthLogoutRoute: typeof ApiAuthLogoutRoute
   ApiAuthMeRoute: typeof ApiAuthMeRoute
@@ -130,11 +206,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/contacts': {
+      id: '/api/contacts'
+      path: '/api/contacts'
+      fullPath: '/api/contacts'
+      preLoaderRoute: typeof ApiContactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/conversations': {
+      id: '/api/conversations'
+      path: '/api/conversations'
+      fullPath: '/api/conversations'
+      preLoaderRoute: typeof ApiConversationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/health': {
       id: '/api/health'
       path: '/api/health'
       fullPath: '/api/health'
       preLoaderRoute: typeof ApiHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/pipeline': {
+      id: '/api/pipeline'
+      path: '/api/pipeline'
+      fullPath: '/api/pipeline'
+      preLoaderRoute: typeof ApiPipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/login': {
@@ -165,6 +262,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthRefreshRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/contacts/$id': {
+      id: '/api/contacts/$id'
+      path: '/$id'
+      fullPath: '/api/contacts/$id'
+      preLoaderRoute: typeof ApiContactsIdRouteImport
+      parentRoute: typeof ApiContactsRoute
+    }
+    '/api/conversations/$id': {
+      id: '/api/conversations/$id'
+      path: '/$id'
+      fullPath: '/api/conversations/$id'
+      preLoaderRoute: typeof ApiConversationsIdRouteImport
+      parentRoute: typeof ApiConversationsRoute
+    }
     '/api/webhooks/meta': {
       id: '/api/webhooks/meta'
       path: '/api/webhooks/meta'
@@ -172,12 +283,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiWebhooksMetaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/conversations/$id/messages': {
+      id: '/api/conversations/$id/messages'
+      path: '/messages'
+      fullPath: '/api/conversations/$id/messages'
+      preLoaderRoute: typeof ApiConversationsIdMessagesRouteImport
+      parentRoute: typeof ApiConversationsIdRoute
+    }
   }
 }
 
+interface ApiContactsRouteChildren {
+  ApiContactsIdRoute: typeof ApiContactsIdRoute
+}
+
+const ApiContactsRouteChildren: ApiContactsRouteChildren = {
+  ApiContactsIdRoute: ApiContactsIdRoute,
+}
+
+const ApiContactsRouteWithChildren = ApiContactsRoute._addFileChildren(
+  ApiContactsRouteChildren,
+)
+
+interface ApiConversationsIdRouteChildren {
+  ApiConversationsIdMessagesRoute: typeof ApiConversationsIdMessagesRoute
+}
+
+const ApiConversationsIdRouteChildren: ApiConversationsIdRouteChildren = {
+  ApiConversationsIdMessagesRoute: ApiConversationsIdMessagesRoute,
+}
+
+const ApiConversationsIdRouteWithChildren =
+  ApiConversationsIdRoute._addFileChildren(ApiConversationsIdRouteChildren)
+
+interface ApiConversationsRouteChildren {
+  ApiConversationsIdRoute: typeof ApiConversationsIdRouteWithChildren
+}
+
+const ApiConversationsRouteChildren: ApiConversationsRouteChildren = {
+  ApiConversationsIdRoute: ApiConversationsIdRouteWithChildren,
+}
+
+const ApiConversationsRouteWithChildren =
+  ApiConversationsRoute._addFileChildren(ApiConversationsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiContactsRoute: ApiContactsRouteWithChildren,
+  ApiConversationsRoute: ApiConversationsRouteWithChildren,
   ApiHealthRoute: ApiHealthRoute,
+  ApiPipelineRoute: ApiPipelineRoute,
   ApiAuthLoginRoute: ApiAuthLoginRoute,
   ApiAuthLogoutRoute: ApiAuthLogoutRoute,
   ApiAuthMeRoute: ApiAuthMeRoute,
