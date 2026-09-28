@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --color-ink: #1c2421;
+  --color-paper: #f6f4ef;
+  --color-card: #fffcf7;
+  --color-line: #e4ddd2;
+  --color-pine: #1f6b4a;
+  --color-pine-dark: #164e36;
+  --color-mist: #efeae2;
+  --color-mute: #6d675f;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}

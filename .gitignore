@@ -1,32 +1,20 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# Python
+back/.venv/
+**/__pycache__/
+*.py[cod]
+*.sqlite3
 
-node_modules
-dist
-dist-ssr
-.output
-.vinxi
-.tanstack/**
-.nitro
-*.local
+# Node
+node_modules/
+web/dist/
 
-# Wrangler / Cloudflare
-.wrangler/
-.dev.vars
+# Segredo: só a raiz. O modelo versionado é .env.example.
+.env
+.env.*
+!.env.example
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Ferramentas locais
+.idea/
+.vscode/
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+*.log
