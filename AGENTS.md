@@ -1,0 +1,3 @@
+- Keep the existing `web/` Vite frontend and `back/` Django API boundaries; visual work must not change authentication or data behavior.
+- Run the web app through root scripts and copy its production output to root `dist/`, because the preview and deployment expect root entry points.
+- Use the token palette in `web/src/styles.css` and an original lightweight vector mask for the workspace pattern, to keep appearance consistent and the frontend light.
