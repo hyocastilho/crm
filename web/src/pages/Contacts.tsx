@@ -31,10 +31,10 @@ export function Contacts() {
   }
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <section>
         <h1 className="text-2xl font-semibold">Contatos</h1>
-        <ul className="mt-4 divide-y divide-line rounded-xl border border-line bg-card">
+        <ul className="mt-4 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-card shadow-panel">
           {lista.map((contato) => (
             <li key={contato.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div>
@@ -46,7 +46,7 @@ export function Contacts() {
               </div>
               <button
                 type="button"
-                className="rounded-md border border-line px-3 py-1 text-sm"
+                className="rounded-lg border border-line bg-white px-3 py-1.5 text-sm shadow-card transition hover:bg-mist"
                 onClick={() => {
                   setEditando(contato);
                   setNome(contato.name);
@@ -60,7 +60,11 @@ export function Contacts() {
           ))}
         </ul>
       </section>
-      <aside className="rounded-xl border border-line bg-card p-4">
+      <aside
+        className={`h-fit rounded-2xl border border-line bg-card p-4 shadow-panel ${
+          editando ? "" : "max-lg:hidden"
+        }`}
+      >
         <h2 className="text-sm font-medium">{editando ? "Editar contato" : "Selecione um contato"}</h2>
         {editando && (
           <form onSubmit={salvar} className="mt-4 space-y-3">
@@ -71,7 +75,7 @@ export function Contacts() {
                 required
                 value={nome}
                 onChange={(event) => setNome(event.target.value)}
-                className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+                className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
               />
             </label>
             <label className="block text-sm" htmlFor="telefone">
@@ -80,11 +84,11 @@ export function Contacts() {
                 id="telefone"
                 value={telefone}
                 onChange={(event) => setTelefone(event.target.value)}
-                className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+                className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
               />
             </label>
             {erro && <p className="text-sm text-red-700">{erro}</p>}
-            <button type="submit" className="rounded-md bg-pine px-3 py-2 text-sm text-white">
+            <button type="submit" className="rounded-xl bg-pine px-3 py-2 text-sm font-medium text-white shadow-card transition hover:bg-pine-dark">
               Salvar
             </button>
           </form>

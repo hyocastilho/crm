@@ -29,6 +29,7 @@ class UserManager(BaseUserManager):
 class Business(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=200)
+    demo_key = models.CharField(max_length=40, unique=True, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -49,6 +50,7 @@ class User(AbstractUser):
     email = models.EmailField("e-mail", unique=True)
     full_name = models.CharField("nome", max_length=200, blank=True)
     role = models.CharField(max_length=20, choices=Role.choices, default=Role.ATENDENTE)
+    is_demo = models.BooleanField(default=False)
     business = models.ForeignKey(
         Business,
         null=True,

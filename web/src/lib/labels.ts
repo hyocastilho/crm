@@ -1,6 +1,4 @@
 export type Sessao = {
-  email: string;
-  fullName: string;
   role: "admin" | "atendente";
   businessName: string;
 };
@@ -10,7 +8,6 @@ export type Contato = {
   name: string;
   phone: string | null;
   instagram_username: string | null;
-  source: string;
 };
 
 export type ConversaResumo = {

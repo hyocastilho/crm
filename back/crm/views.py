@@ -111,8 +111,6 @@ def me(request):
     return JsonResponse(
         {
             "user": {
-                "email": user.email,
-                "fullName": user.full_name,
                 "role": user.role,
                 "businessName": user.business.name,
             }

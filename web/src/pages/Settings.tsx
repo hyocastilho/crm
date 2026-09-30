@@ -25,7 +25,7 @@ export function Settings() {
 
 function Canal({ nome }: { nome: string }) {
   return (
-    <article className="rounded-xl border border-line bg-card p-4">
+    <article className="rounded-2xl border border-line bg-card p-5 shadow-panel">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">{nome}</h2>
         <span className="rounded-full border border-line px-2 py-0.5 text-xs">Desconectado</span>

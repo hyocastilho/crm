@@ -43,9 +43,9 @@ export function AppShell() {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-10 border-b border-line bg-card/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3">
-          <strong className="text-lg">{sessao.businessName || "CRM"}</strong>
+      <header className="sticky top-0 z-10 border-b border-line/80 bg-card/85 shadow-panel backdrop-blur-md">
+        <div className="mx-auto flex max-w-[96rem] items-center gap-3 px-3 py-3 sm:gap-4 sm:px-4">
+          <strong className="truncate font-display text-lg tracking-tight">{sessao.businessName || "CRM"}</strong>
           <nav className="hidden flex-1 gap-1 md:flex">
             {LINKS.map((link) => (
               <NavLink
@@ -53,21 +53,18 @@ export function AppShell() {
                 to={link.to}
                 end={link.to === "/"}
                 className={({ isActive }) =>
-                  `rounded-md px-3 py-2 text-sm ${isActive ? "bg-mist font-medium" : "text-mute"}`
+                  `rounded-lg px-3 py-2 text-sm transition ${isActive ? "bg-pine text-white shadow-card" : "text-mute hover:bg-mist"}`
                 }
               >
                 {link.label}
               </NavLink>
             ))}
           </nav>
-          <div className="ml-auto flex items-center gap-3">
-            <span className="hidden text-sm text-mute sm:inline">
-              {sessao.fullName || sessao.email} · {sessao.role}
-            </span>
+          <div className="ml-auto">
             <button
               type="button"
               onClick={sair}
-              className="rounded-md border border-line px-3 py-2 text-sm"
+              className="rounded-lg border border-line bg-card px-3 py-2 text-sm shadow-card transition hover:bg-mist"
             >
               Sair
             </button>
@@ -80,7 +77,7 @@ export function AppShell() {
               to={link.to}
               end={link.to === "/"}
               className={({ isActive }) =>
-                `rounded-md px-3 py-2 text-sm whitespace-nowrap ${isActive ? "bg-mist font-medium" : "text-mute"}`
+                `rounded-lg px-3 py-2 text-sm whitespace-nowrap transition ${isActive ? "bg-pine text-white shadow-card" : "text-mute"}`
               }
             >
               {link.label}
@@ -88,7 +85,7 @@ export function AppShell() {
           ))}
         </nav>
       </header>
-      <main className="mx-auto max-w-7xl px-4 py-6">
+      <main className="mx-auto max-w-[96rem] px-3 py-4 sm:px-4 sm:py-6">
         <Outlet context={sessao} />
       </main>
     </div>

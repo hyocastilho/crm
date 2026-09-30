@@ -22,6 +22,15 @@ export function Inbox() {
   const [texto, setTexto] = useState("");
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
+  const [estreito, setEstreito] = useState(false);
+
+  useEffect(() => {
+    const consulta = window.matchMedia("(max-width: 767px)");
+    const aplicar = () => setEstreito(consulta.matches);
+    aplicar();
+    consulta.addEventListener("change", aplicar);
+    return () => consulta.removeEventListener("change", aplicar);
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -31,7 +40,12 @@ export function Inbox() {
         })
         .then((response) => {
           setLista(response.data.conversations);
-          setSelecionada((atual) => atual ?? response.data.conversations[0]?.id ?? null);
+          const estreita = window.matchMedia("(max-width: 767px)").matches;
+          setSelecionada((atual) => {
+            if (atual && response.data.conversations.some((item) => item.id === atual)) return atual;
+            if (estreita) return null;
+            return response.data.conversations[0]?.id ?? null;
+          });
         })
         .catch(() => setLista([]));
     }, 200);
@@ -79,14 +93,18 @@ export function Inbox() {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[280px_minmax(0,1fr)_260px]">
-      <section className="rounded-xl border border-line bg-card">
+    <div className="grid grid-cols-1 gap-4 max-md:h-[calc(100dvh-8.5rem)] md:h-[calc(100dvh-8rem)] md:grid-cols-[17rem_minmax(0,1fr)] md:grid-rows-[minmax(0,1.3fr)_minmax(12rem,0.7fr)] xl:grid-cols-[17rem_minmax(0,1fr)_18rem] xl:grid-rows-1">
+      <section
+        className={`min-h-0 flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-panel md:row-span-2 xl:row-span-1 ${
+          estreito && selecionada ? "hidden" : "flex"
+        }`}
+      >
         <div className="space-y-2 border-b border-line p-3">
           <input
             value={busca}
             onChange={(event) => setBusca(event.target.value)}
             placeholder="Buscar por nome"
-            className="w-full rounded-md border border-line bg-white px-3 py-2 text-sm"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card outline-none focus:border-pine"
           />
           <div className="flex gap-1">
             {(
@@ -100,14 +118,14 @@ export function Inbox() {
                 key={valor}
                 type="button"
                 onClick={() => setCanal(valor)}
-                className={`rounded-md px-2 py-1 text-xs ${canal === valor ? "bg-pine text-white" : "border border-line"}`}
+                className={`rounded-lg px-2.5 py-1 text-xs transition ${canal === valor ? "bg-pine text-white shadow-card" : "border border-line bg-white"}`}
               >
                 {rotulo}
               </button>
             ))}
           </div>
         </div>
-        <ul className="max-h-[70vh] overflow-y-auto">
+        <ul className="min-h-0 flex-1 overflow-y-auto">
           {lista.map((conversa) => (
             <li key={conversa.id}>
               <button
@@ -129,9 +147,18 @@ export function Inbox() {
         </ul>
       </section>
 
-      <section className="flex min-h-[70vh] flex-col rounded-xl border border-line bg-card">
+      <section
+        className={`min-h-0 flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-panel ${
+          estreito && !selecionada ? "hidden" : "flex"
+        }`}
+      >
         <header className="border-b border-line px-4 py-3">
-          <h1 className="text-lg font-semibold">{detalhe?.contact.name ?? "Conversa"}</h1>
+          {estreito && (
+            <button type="button" onClick={() => setSelecionada(null)} className="mb-2 text-sm text-pine">
+              Voltar à lista
+            </button>
+          )}
+          <h1 className="text-lg">{detalhe?.contact.name ?? "Conversa"}</h1>
           {detalhe && <p className="text-sm text-mute">{rotuloCanal(detalhe.conversation.channel)}</p>}
         </header>
         <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
@@ -139,7 +166,7 @@ export function Inbox() {
             <div
               key={mensagem.id}
               className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
-                mensagem.direction === "out" ? "ml-auto bg-pine text-white" : "bg-mist"
+                mensagem.direction === "out" ? "ml-auto bg-pine text-white shadow-card" : "bg-mist shadow-card"
               }`}
             >
               <p className="whitespace-pre-wrap">{mensagem.body}</p>
@@ -153,20 +180,24 @@ export function Inbox() {
             onChange={(event) => setTexto(event.target.value)}
             maxLength={4000}
             placeholder="Escreva a resposta. Ela fica só no CRM nesta etapa."
-            className="min-h-20 w-full rounded-md border border-line bg-white px-3 py-2 text-sm"
+            className="min-h-20 w-full rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card outline-none focus:border-pine"
           />
           {erro && <p className="text-sm text-red-700">{erro}</p>}
           <button
             type="submit"
             disabled={!selecionada || enviando || texto.trim().length === 0}
-            className="rounded-md bg-pine px-3 py-2 text-sm text-white disabled:opacity-60"
+            className="rounded-xl bg-pine px-4 py-2 text-sm font-medium text-white shadow-card transition hover:bg-pine-dark disabled:opacity-60"
           >
             {enviando ? "Guardando…" : "Responder"}
           </button>
         </form>
       </section>
 
-      <aside className="space-y-4 rounded-xl border border-line bg-card p-4">
+      <aside
+        className={`min-h-0 space-y-4 overflow-y-auto rounded-2xl border border-line bg-card p-4 shadow-panel ${
+          estreito && !selecionada ? "hidden" : "block"
+        }`}
+      >
         <div>
           <h2 className="text-sm font-medium">Contato</h2>
           <p className="mt-2 text-sm">{detalhe?.contact.name ?? "—"}</p>
@@ -182,7 +213,7 @@ export function Inbox() {
             value={detalhe?.conversation.stage ?? ""}
             disabled={!detalhe}
             onChange={(event) => atualizar({ stage: event.target.value })}
-            className="mt-2 w-full rounded-md border border-line bg-white px-3 py-2"
+            className="mt-2 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
           >
             {ETAPAS.map((etapa) => (
               <option key={etapa.value} value={etapa.value}>
@@ -203,7 +234,7 @@ export function Inbox() {
             type="button"
             disabled={!detalhe || detalhe.conversation.handler === "humano"}
             onClick={() => atualizar({ handler: "humano" })}
-            className="mt-3 rounded-md border border-line px-3 py-2 text-sm disabled:opacity-50"
+            className="mt-3 rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card transition hover:bg-mist disabled:opacity-50"
           >
             Assumir atendimento
           </button>

@@ -9,7 +9,6 @@ CRM/
   docker-compose.yml   banco, backend e site.
   back/                Django: modelos, API, sessão, admin.
   web/                 React. O navegador só chama /api.
-  docs/
 ```
 
 Não existe pasta `server`, `lovable` nem `.vscode`. O editor não faz parte do sistema.
@@ -41,7 +40,11 @@ Preencha `.env` antes, se ainda estiver vazio. O container `back` aplica as migr
 
 As portas 8000 e 5173 não são usadas de propósito: outros projetos desta máquina já as ocupam.
 
-Login: o e-mail e a senha são `SEED_ADMIN_EMAIL` e `SEED_ADMIN_PASSWORD` do `.env`.
+O login inicial é só de demonstração (`SEED_ADMIN_EMAIL` e `SEED_ADMIN_PASSWORD`). A loja, esse usuário e as conversas fictícias ficam em `back/crm/demo`. Para apagar tudo isso de uma vez:
+
+```sh
+docker compose exec back python manage.py clear_demo
+```
 
 ## Segurança desta etapa
 

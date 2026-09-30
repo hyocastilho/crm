@@ -33,7 +33,7 @@ export function Login() {
 
   return (
     <div className="grid min-h-screen place-items-center px-4">
-      <form onSubmit={entrar} className="w-full max-w-sm rounded-2xl border border-line bg-card p-6">
+      <form onSubmit={entrar} className="w-full max-w-sm rounded-3xl border border-line bg-card p-7 shadow-panel">
         <h1 className="text-xl font-semibold">Entrar no CRM</h1>
         <p className="mt-1 text-sm text-mute">Acesso restrito à equipe da loja.</p>
         <label className="mt-5 block text-sm" htmlFor="email">
@@ -46,7 +46,7 @@ export function Login() {
           required
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+          className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2.5 shadow-card outline-none focus:border-pine"
         />
         <label className="mt-4 block text-sm" htmlFor="senha">
           Senha
@@ -58,13 +58,13 @@ export function Login() {
           required
           value={senha}
           onChange={(event) => setSenha(event.target.value)}
-          className="mt-1 w-full rounded-md border border-line bg-white px-3 py-2"
+          className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2.5 shadow-card outline-none focus:border-pine"
         />
         {erro && <p className="mt-3 text-sm text-red-700">{erro}</p>}
         <button
           type="submit"
           disabled={enviando}
-          className="mt-5 w-full rounded-md bg-pine px-3 py-2 text-white disabled:opacity-60"
+          className="mt-5 w-full rounded-xl bg-pine px-3 py-2.5 font-medium text-white shadow-card transition hover:bg-pine-dark disabled:opacity-60"
         >
           {enviando ? "Entrando…" : "Entrar"}
         </button>
