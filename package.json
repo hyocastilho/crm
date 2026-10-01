@@ -2,8 +2,8 @@
   "name": "crm-workspace",
   "private": true,
   "scripts": {
-    "dev": "bun --cwd web run dev -- --port 8080",
-    "build:dev": "bun --cwd web run build && mkdir -p dist && cp -r web/dist/. dist/",
+    "dev": "npm --prefix web run dev -- --port 8080 --host 0.0.0.0",
+    "build:dev": "npm --prefix web run build && mkdir -p dist && cp -r web/dist/. dist/",
     "build": "bun run build:dev"
   }
 }
