@@ -27,10 +27,12 @@ Docker Desktop ligado. Na raiz:
 
 ```sh
 copy .env.example .env
-docker compose up --build
+docker compose up -d --build
 ```
 
 Preencha `.env` antes, se ainda estiver vazio. O container `back` aplica as migrações e cria a loja de demonstração.
+
+Os três serviços usam `restart: unless-stopped`: quando o Docker Desktop sobe de novo (por exemplo ao ligar o notebook), o CRM volta sozinho, como nos outros projetos. No Docker Desktop, deixe **Start Docker Desktop when you sign in to your computer** ligado. Se o site não abrir depois de hibernar, rode `docker compose up -d` na raiz — às vezes o volume do Windows falha uma vez e o container reinicia na sequência.
 
 | Serviço | No computador | Dentro da rede Docker |
 | --- | --- | --- |
