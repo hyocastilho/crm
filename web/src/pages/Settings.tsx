@@ -25,10 +25,10 @@ export function Settings() {
 
 function Canal({ nome }: { nome: string }) {
   return (
-    <article className="rounded-2xl border border-line bg-card p-5 shadow-panel">
+     <article className="rounded-md border border-line bg-card p-5 shadow-card">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">{nome}</h2>
-        <span className="rounded-full border border-line px-2 py-0.5 text-xs">Desconectado</span>
+         <span className="rounded-sm border border-line bg-input px-2 py-0.5 text-xs text-mute">Desconectado</span>
       </div>
       <p className="mt-3 text-sm text-mute">
         Sem QR code e sem campo de token. O número e a conta entram pelo login oficial da Meta, quando essa etapa
