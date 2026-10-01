@@ -93,18 +93,19 @@ export function Inbox() {
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4 max-md:h-[calc(100dvh-8.5rem)] md:h-[calc(100dvh-8rem)] md:grid-cols-[17rem_minmax(0,1fr)] md:grid-rows-[minmax(0,1.3fr)_minmax(12rem,0.7fr)] xl:grid-cols-[17rem_minmax(0,1fr)_18rem] xl:grid-rows-1">
+    <div className="grid grid-cols-1 gap-3 max-md:h-[calc(100dvh-9rem)] md:h-[calc(100dvh-10rem)] md:grid-cols-[19rem_minmax(0,1fr)] md:grid-rows-[minmax(0,1.3fr)_minmax(12rem,0.7fr)] xl:grid-cols-[19rem_minmax(0,1fr)_17rem] xl:grid-rows-1">
       <section
-        className={`min-h-0 flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-panel md:row-span-2 xl:row-span-1 ${
+        className={`min-h-0 flex-col overflow-hidden rounded-md border border-line bg-card shadow-card md:row-span-2 xl:row-span-1 ${
           estreito && selecionada ? "hidden" : "flex"
         }`}
       >
-        <div className="space-y-2 border-b border-line p-3">
+        <div className="space-y-3 border-b border-line p-4">
+          <h2 className="text-xl font-semibold">Mensagens</h2>
           <input
             value={busca}
             onChange={(event) => setBusca(event.target.value)}
             placeholder="Buscar por nome"
-            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card outline-none focus:border-pine"
+            className="w-full rounded-md border border-line bg-input px-3 py-2 text-sm outline-none focus:border-pine-dark"
           />
           <div className="flex gap-1">
             {(
@@ -118,7 +119,7 @@ export function Inbox() {
                 key={valor}
                 type="button"
                 onClick={() => setCanal(valor)}
-                className={`rounded-lg px-2.5 py-1 text-xs transition ${canal === valor ? "bg-pine text-white shadow-card" : "border border-line bg-white"}`}
+                className={`rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors ${canal === valor ? "bg-graphite text-on-graphite" : "border border-line bg-card text-mute hover:bg-mist"}`}
               >
                 {rotulo}
               </button>
@@ -131,8 +132,8 @@ export function Inbox() {
               <button
                 type="button"
                 onClick={() => setSelecionada(conversa.id)}
-                className={`w-full border-b border-line px-3 py-3 text-left ${
-                  conversa.id === selecionada ? "bg-mist" : ""
+                className={`w-full border-b border-line px-4 py-4 text-left transition-colors hover:bg-input ${
+                  conversa.id === selecionada ? "bg-mist border-l-[3px] border-l-pine" : ""
                 }`}
               >
                 <span className="flex items-center justify-between gap-2">
@@ -148,25 +149,25 @@ export function Inbox() {
       </section>
 
       <section
-        className={`min-h-0 flex-col overflow-hidden rounded-2xl border border-line bg-card shadow-panel ${
+        className={`min-h-0 flex-col overflow-hidden rounded-md border border-line bg-card shadow-card ${
           estreito && !selecionada ? "hidden" : "flex"
         }`}
       >
-        <header className="border-b border-line px-4 py-3">
+        <header className="border-b border-line px-5 py-4">
           {estreito && (
-            <button type="button" onClick={() => setSelecionada(null)} className="mb-2 text-sm text-pine">
+            <button type="button" onClick={() => setSelecionada(null)} className="mb-2 text-sm font-medium text-ink">
               Voltar à lista
             </button>
           )}
           <h1 className="text-lg">{detalhe?.contact.name ?? "Conversa"}</h1>
           {detalhe && <p className="text-sm text-mute">{rotuloCanal(detalhe.conversation.channel)}</p>}
         </header>
-        <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-4">
+        <div className="conversation-canvas flex flex-1 flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-6">
           {(detalhe?.messages ?? []).map((mensagem) => (
             <div
               key={mensagem.id}
-              className={`max-w-[80%] rounded-2xl px-3 py-2 text-sm ${
-                mensagem.direction === "out" ? "ml-auto bg-pine text-white shadow-card" : "bg-mist shadow-card"
+              className={`max-w-[80%] rounded-md border px-4 py-3 text-sm shadow-card ${
+                mensagem.direction === "out" ? "ml-auto border-pine bg-pine text-ink" : "border-line bg-card"
               }`}
             >
               <p className="whitespace-pre-wrap">{mensagem.body}</p>
@@ -174,19 +175,19 @@ export function Inbox() {
             </div>
           ))}
         </div>
-        <form onSubmit={responder} className="space-y-2 border-t border-line p-3">
+        <form onSubmit={responder} className="space-y-2 border-t border-line bg-card p-4">
           <textarea
             value={texto}
             onChange={(event) => setTexto(event.target.value)}
             maxLength={4000}
             placeholder="Escreva a resposta. Ela fica só no CRM nesta etapa."
-            className="min-h-20 w-full rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card outline-none focus:border-pine"
+            className="min-h-20 w-full resize-y rounded-md border border-line bg-input px-3 py-2 text-sm outline-none focus:border-pine-dark"
           />
-          {erro && <p className="text-sm text-red-700">{erro}</p>}
+          {erro && <p className="text-sm text-error">{erro}</p>}
           <button
             type="submit"
             disabled={!selecionada || enviando || texto.trim().length === 0}
-            className="rounded-xl bg-pine px-4 py-2 text-sm font-medium text-white shadow-card transition hover:bg-pine-dark disabled:opacity-60"
+            className="rounded-md bg-pine px-4 py-2 text-sm font-semibold text-ink transition-colors hover:bg-pine-dark disabled:opacity-60"
           >
             {enviando ? "Guardando…" : "Responder"}
           </button>
@@ -194,7 +195,7 @@ export function Inbox() {
       </section>
 
       <aside
-        className={`min-h-0 space-y-4 overflow-y-auto rounded-2xl border border-line bg-card p-4 shadow-panel ${
+        className={`min-h-0 space-y-5 overflow-y-auto rounded-md border border-line bg-card p-5 shadow-card ${
           estreito && !selecionada ? "hidden" : "block"
         }`}
       >
@@ -213,7 +214,7 @@ export function Inbox() {
             value={detalhe?.conversation.stage ?? ""}
             disabled={!detalhe}
             onChange={(event) => atualizar({ stage: event.target.value })}
-            className="mt-2 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
+            className="mt-2 w-full rounded-md border border-line bg-input px-3 py-2 outline-none focus:border-pine-dark"
           >
             {ETAPAS.map((etapa) => (
               <option key={etapa.value} value={etapa.value}>
@@ -234,7 +235,7 @@ export function Inbox() {
             type="button"
             disabled={!detalhe || detalhe.conversation.handler === "humano"}
             onClick={() => atualizar({ handler: "humano" })}
-            className="mt-3 rounded-xl border border-line bg-white px-3 py-2 text-sm shadow-card transition hover:bg-mist disabled:opacity-50"
+            className="mt-3 rounded-md border border-line bg-card px-3 py-2 text-sm font-medium transition-colors hover:bg-mist disabled:opacity-50"
           >
             Assumir atendimento
           </button>

@@ -6,12 +6,12 @@ type Item = { id: string; name: string; channel: string };
 type Quadro = { counts: Record<string, number>; byStage: Record<string, Item[]> };
 
 const TINTA: Record<string, string> = {
-  novo: "bg-sky-100 text-sky-900",
-  em_atendimento: "bg-amber-100 text-amber-950",
-  orcamento: "bg-violet-100 text-violet-950",
-  pedido: "bg-teal-100 text-teal-950",
-  pago: "bg-emerald-100 text-emerald-950",
-  perdido: "bg-stone-200 text-stone-700",
+  novo: "bg-mist text-ink",
+  em_atendimento: "bg-line text-ink",
+  orcamento: "bg-pine/30 text-ink",
+  pedido: "bg-graphite text-on-graphite",
+  pago: "bg-pine text-ink",
+  perdido: "bg-input text-mute",
 };
 
 export function Pipeline() {
@@ -65,11 +65,11 @@ export function Pipeline() {
     <div>
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Funil</h1>
+          <h1 className="text-2xl font-semibold">Funil</h1>
           <p className="mt-1 text-sm text-mute">Arraste o card para a próxima etapa da venda.</p>
         </div>
       </div>
-      {erro && <p className="mt-3 text-sm text-red-700">{erro}</p>}
+      {erro && <p className="mt-3 text-sm text-error">{erro}</p>}
       <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {ETAPAS.map((etapa) => (
           <section
@@ -83,8 +83,8 @@ export function Pipeline() {
               event.preventDefault();
               void soltar(etapa.value);
             }}
-            className={`flex min-h-56 flex-col rounded-2xl border bg-card/80 p-2 shadow-panel transition ${
-              sobre === etapa.value ? "border-pine bg-white" : "border-line"
+             className={`flex min-h-56 flex-col rounded-md border bg-card p-2 shadow-card transition-colors ${
+               sobre === etapa.value ? "border-pine bg-mist" : "border-line"
             }`}
           >
             <header
@@ -98,7 +98,7 @@ export function Pipeline() {
                 void soltar(etapa.value);
               }}
             >
-              <h2 className={`rounded-full px-2.5 py-1 text-xs font-semibold ${TINTA[etapa.value]}`}>
+               <h2 className={`rounded-sm px-2.5 py-1 text-xs font-semibold ${TINTA[etapa.value]}`}>
                 {etapa.label}
               </h2>
               <span className="text-xs font-medium text-mute">{dados?.counts[etapa.value] ?? 0}</span>
@@ -131,7 +131,7 @@ export function Pipeline() {
                     setArrastando(null);
                     setSobre(null);
                   }}
-                  className={`cursor-grab rounded-xl border border-line bg-card px-3 py-3 shadow-card active:cursor-grabbing ${
+                   className={`cursor-grab rounded-md border border-line bg-card px-3 py-3 shadow-card active:cursor-grabbing ${
                     arrastando === item.id ? "opacity-50" : ""
                   }`}
                 >

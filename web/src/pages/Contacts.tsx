@@ -34,7 +34,7 @@ export function Contacts() {
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
       <section>
         <h1 className="text-2xl font-semibold">Contatos</h1>
-        <ul className="mt-4 divide-y divide-line overflow-hidden rounded-2xl border border-line bg-card shadow-panel">
+        <ul className="mt-4 divide-y divide-line overflow-hidden rounded-md border border-line bg-card shadow-card">
           {lista.map((contato) => (
             <li key={contato.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div>
@@ -46,7 +46,7 @@ export function Contacts() {
               </div>
               <button
                 type="button"
-                className="rounded-lg border border-line bg-white px-3 py-1.5 text-sm shadow-card transition hover:bg-mist"
+                 className="rounded-md border border-line bg-card px-3 py-1.5 text-sm font-medium transition-colors hover:bg-mist"
                 onClick={() => {
                   setEditando(contato);
                   setNome(contato.name);
@@ -61,7 +61,7 @@ export function Contacts() {
         </ul>
       </section>
       <aside
-        className={`h-fit rounded-2xl border border-line bg-card p-4 shadow-panel ${
+         className={`h-fit rounded-md border border-line bg-card p-5 shadow-card ${
           editando ? "" : "max-lg:hidden"
         }`}
       >
@@ -75,7 +75,7 @@ export function Contacts() {
                 required
                 value={nome}
                 onChange={(event) => setNome(event.target.value)}
-                className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
+                 className="mt-1 w-full rounded-md border border-line bg-input px-3 py-2 outline-none focus:border-pine-dark"
               />
             </label>
             <label className="block text-sm" htmlFor="telefone">
@@ -84,11 +84,11 @@ export function Contacts() {
                 id="telefone"
                 value={telefone}
                 onChange={(event) => setTelefone(event.target.value)}
-                className="mt-1 w-full rounded-xl border border-line bg-white px-3 py-2 shadow-card outline-none focus:border-pine"
+                 className="mt-1 w-full rounded-md border border-line bg-input px-3 py-2 outline-none focus:border-pine-dark"
               />
             </label>
-            {erro && <p className="text-sm text-red-700">{erro}</p>}
-            <button type="submit" className="rounded-xl bg-pine px-3 py-2 text-sm font-medium text-white shadow-card transition hover:bg-pine-dark">
+             {erro && <p className="text-sm text-error">{erro}</p>}
+             <button type="submit" className="rounded-md bg-pine px-3 py-2 text-sm font-semibold text-ink transition-colors hover:bg-pine-dark">
               Salvar
             </button>
           </form>
