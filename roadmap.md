@@ -1,3 +1,3 @@
-- [ ] Apply selected graphite/lime workspace design to login and authenticated screens.
-- [ ] Restore root preview/build scripts so the redesigned site can open.
-- [ ] Verify login appearance at desktop/mobile and current build signal.
+- [x] Apply selected graphite/lime workspace design to login and authenticated screens.
+- [x] Restore root preview/build scripts so the redesigned site can open.
+- [x] Verify login and inbox appearance at desktop/mobile and current build signal.
