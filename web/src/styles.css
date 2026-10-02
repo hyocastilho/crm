@@ -15,6 +15,7 @@
   --color-on-graphite: #F5F6F3;
   --color-error: #A34242;
   --color-input: #F5F6F3;
+  --color-pattern-base: #EDF3EF;
   --shadow-panel: 0 12px 38px -20px color-mix(in srgb, var(--color-ink) 18%, transparent);
   --shadow-card: 0 3px 12px -7px color-mix(in srgb, var(--color-ink) 20%, transparent);
 }
@@ -28,9 +29,12 @@ button { cursor: pointer; }
 button:disabled { cursor: not-allowed; }
 :where(button, a, input, textarea, select):focus-visible { outline: 2px solid var(--color-pine-dark); outline-offset: 2px; }
 
-/* A tiny original line drawing repeated as a mask: one vector, no image decode or animation. */
-.pattern-surface { position: relative; isolation: isolate; }
-.pattern-surface::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-ink); opacity: .055; mask: url('/workspace-pattern.svg') repeat; mask-size: 240px 240px; }
-.conversation-canvas { position: relative; isolation: isolate; background: var(--color-paper); }
-.conversation-canvas::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: var(--color-ink); opacity: .045; mask: url('/workspace-pattern.svg') repeat; mask-size: 240px 240px; }
+/* One original vector composition, rendered once rather than tiled over the interface. */
+.pattern-surface, .conversation-canvas {
+  background-color: var(--color-pattern-base);
+  background-image: url('/workspace-pattern.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
