@@ -12,7 +12,7 @@
 
 - Melhorar **UI/UX** em `web/src/` (páginas, componentes, `web/src/styles.css`, assets em `web/public/`).
 - Ajustar tipografia e cores via tokens em `web/src/styles.css` (`@theme`).
-- Padrão de fundo: SVG leve em `web/public/` + máscara CSS (como `workspace-pattern.svg`), sem PNG pesado nem wallpaper copiado de terceiros.
+- Fundo com `workspace-pattern.svg` e tokens em `web/src/styles.css`, no estilo aprovado do Lovable (`.pattern-surface`).
 
 ## O que não fazer
 
