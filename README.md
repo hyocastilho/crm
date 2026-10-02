@@ -11,7 +11,9 @@ CRM/
   web/                 React. O navegador só chama /api.
 ```
 
-Não existe pasta `server`, `lovable` nem `.vscode`. O editor não faz parte do sistema.
+Não existe pasta `server` nem `.vscode`. O editor não faz parte do sistema.
+
+O **Lovable** usa o mesmo repositório (`exact-screenshot`): preview com `.lovable/dev` e um `package.json` mínimo na raiz só para o instalador do Lovable (`bun install`). O app React continua só em `web/`; API e login são Django em `back/`. Regras completas em `AGENTS.md`.
 
 ## Onde fica o ambiente
 

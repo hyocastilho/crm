@@ -1,0 +1,6 @@
+#!/bin/sh
+# Preview Lovable: dependências e Vite ficam em web/ (Django em back/ via Docker).
+if [ ! -x web/node_modules/.bin/vite ]; then
+  npm --prefix web ci --no-audit --no-fund || npm --prefix web install --no-audit --no-fund
+fi
+exec npm --prefix web run dev -- --port 8080 --host 0.0.0.0

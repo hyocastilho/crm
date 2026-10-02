@@ -4,7 +4,8 @@
 
 - **Frontend:** só a pasta `web/` (React + Vite + Tailwind). Porta publicada no host: **5175** (container 5173).
 - **Backend:** só a pasta `back/` (Django + PostgreSQL). API em `/api` via proxy do Vite; sessão HttpOnly no cookie `crm_session`.
-- **Banco:** PostgreSQL no `docker-compose.yml` (`db`). **Não usar Supabase** — não criar `supabase/`, `src/integrations/supabase/`, client Supabase, nem `package.json` na raiz do monorepo.
+- **Banco:** PostgreSQL no `docker-compose.yml` (`db`). **Não usar Supabase** — não criar `supabase/`, `src/integrations/supabase/`, client Supabase, nem pasta `src/` na raiz.
+- **Raiz:** pode existir só `package.json` vazio de dependências (shim para o `bun install` / publicação do Lovable), `lovable.toml` e `.lovable/dev`. Esse `package.json` só delega para `web/` — sem Supabase, sem app React na raiz.
 - **Ambiente:** um único `.env` na **raiz** do repositório (modelo: `.env.example`). Nada de `.env` dentro de `web/` ou `back/`.
 
 ## O que você pode fazer
@@ -18,7 +19,7 @@
 - Não adicionar Supabase, Lovable Cloud DB, TanStack Start server, Express separado, nem rotas `/api` fora do Django.
 - Não mover o app para `src/` na raiz; o código React vive em `web/src/`.
 - Não mudar fluxo de login, axios (`web/src/lib/api.ts`), CSRF, nem contratos da API Django sem pedido explícito.
-- Não recriar `package.json` na raiz “para build”: o build do site é `npm run build` dentro de `web/` (Docker já cuida disso).
+- Não adicionar dependências de app no `package.json` da raiz nem substituir o shim por um projeto TanStack/Supabase na raiz.
 
 ## Sincronização com o Cursor
 

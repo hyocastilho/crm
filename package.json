@@ -1,0 +1,12 @@
+{
+  "name": "crm-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Encaminha install/build para web/. Não coloque dependências da app aqui.",
+  "scripts": {
+    "postinstall": "npm --prefix web ci --no-audit --no-fund",
+    "dev": "npm --prefix web run dev -- --host 0.0.0.0 --port 8080",
+    "build": "npm --prefix web run build",
+    "preview": "npm --prefix web run preview"
+  }
+}
